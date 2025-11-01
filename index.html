@@ -1,10 +1,559 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Smythe University College (SUC) — Academic Hub</title>
-  <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet">
+  <title>Prepared For English 101 Midterm</title>
+
+  <!-- Minimal modern + classic styling -->
+  <style>
+    :root{
+      --bg:#f7f8fb;
+      --card:#ffffff;
+      --muted:#59606a;
+      --accent:#2b6cb0;
+      --accent-2:#1e293b;
+      --glass: rgba(255,255,255,0.6);
+      --radius:14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#e9eef6);color:var(--accent-2);}
+    .wrap{max-width:1100px;margin:32px auto;padding:28px;}
+    header {
+      display:flex;gap:16px;align-items:center;margin-bottom:18px;
+    }
+    .logo {
+      width:82px;height:82px;border-radius:16px;background:linear-gradient(135deg,var(--accent),#5aa0e6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:28px;box-shadow:0 8px 30px rgba(43,108,176,0.18);
+    }
+    h1{margin:0;font-size:22px;letter-spacing:0.2px}
+    p.lead{margin:4px 0 0;color:var(--muted);font-size:14px}
+    nav.controls{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap}
+    .icon-btn{
+      background:var(--card);border-radius:12px;padding:10px 12px;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(30,41,59,0.06);cursor:pointer;
+      box-shadow: 0 6px 18px rgba(30,41,59,0.04);transition:transform .15s ease,box-shadow .15s ease;
+    }
+    .icon-btn:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(30,41,59,0.08);}
+    .icon-btn span.emoji{font-size:18px}
+    .icon-btn small{color:var(--muted);font-size:12px}
+    main.card{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid rgba(30,41,59,0.04);box-shadow:0 20px 40px rgba(30,41,59,0.04)}
+    .accordion{margin-top:12px;}
+    .section-header{
+      display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:12px;background:linear-gradient(180deg,rgba(0,0,0,0.01),transparent);cursor:pointer;margin-bottom:10px;border:1px solid rgba(30,41,59,0.03);
+    }
+    .section-header .left{display:flex;gap:12px;align-items:center}
+    .section-header h2{margin:0;font-size:16px}
+    .section-header p{margin:0;color:var(--muted);font-size:12px}
+    .chev{transition:transform .2s ease}
+    .panel{padding:12px 14px;border-radius:12px;background:linear-gradient(180deg,var(--glass),transparent);margin-bottom:18px;border:1px solid rgba(30,41,59,0.02);display:none}
+    .qa{margin:8px 0;padding:10px;border-radius:10px;background:rgba(11,22,39,0.02)}
+    .q{font-weight:600;color:var(--accent-2)}
+    .a{margin-top:6px;color:var(--muted)}
+    code.inline{background:#eef3fb;padding:2px 6px;border-radius:6px;font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;}
+    /* responsive */
+    @media (max-width:720px){
+      .wrap{padding:16px}
+      .logo{width:64px;height:64px;font-size:22px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">ENG</div>
+      <div>
+        <h1>Prepared For English 101 Midterm</h1>
+        <p class="lead">Accordion navigation — click an icon or section to expand/collapse. All questions answered.</p>
+      </div>
+    </header>
+
+    <div class="controls">
+      <!-- Icon buttons that scroll to and toggle the section -->
+      <button class="icon-btn" data-target="s1"><span class="emoji">🧠</span><div><small>Section 1</small><div style="font-size:12px;color:var(--muted)">Definition & Function of Nouns</div></div></button>
+
+      <button class="icon-btn" data-target="s2"><span class="emoji">🧩</span><div><small>Section 2</small><div style="font-size:12px;color:var(--muted)">Types of Nouns</div></div></button>
+
+      <button class="icon-btn" data-target="s3"><span class="emoji">🧪</span><div><small>Section 3</small><div style="font-size:12px;color:var(--muted)">Recognizing Nouns</div></div></button>
+
+      <button class="icon-btn" data-target="s4"><span class="emoji">🧬</span><div><small>Section 4</small><div style="font-size:12px;color:var(--muted)">Properties of Nouns</div></div></button>
+
+      <button class="icon-btn" data-target="s5"><span class="emoji">🔠</span><div><small>Section 5</small><div style="font-size:12px;color:var(--muted)">Gender in Nouns</div></div></button>
+
+      <button class="icon-btn" data-target="s6"><span class="emoji">🔁</span><div><small>Section 6</small><div style="font-size:12px;color:var(--muted)">Pluralization Rules</div></div></button>
+
+      <button class="icon-btn" data-target="s7"><span class="emoji">🌍</span><div><small>Section 7</small><div style="font-size:12px;color:var(--muted)">Irregular & Invariable</div></div></button>
+
+      <button class="icon-btn" data-target="s8"><span class="emoji">🧠</span><div><small>Section 8</small><div style="font-size:12px;color:var(--muted)">Collective Nouns</div></div></button>
+
+      <button class="icon-btn" data-target="s9"><span class="emoji">🇬🇧</span><div><small>Section 9</small><div style="font-size:12px;color:var(--muted)">British vs. American</div></div></button>
+    </div>
+
+    <main class="card">
+      <div class="accordion">
+
+        <!-- Section 1 -->
+        <div id="s1" class="block">
+          <div class="section-header" data-toggle="panel1">
+            <div class="left">
+              <div style="font-size:20px">🧠</div>
+              <div>
+                <h2>Section 1: Definition and Function of Nouns</h2>
+                <p>Multiple choice & short answer</p>
+              </div>
+            </div>
+            <div class="right">
+              <div class="chev">▸</div>
+            </div>
+          </div>
+          <div id="panel1" class="panel">
+
+            <div class="qa">
+              <div class="q">1. What does the Latin root <em>nomen</em> mean?</div>
+              <div class="a"><strong>Answer:</strong> B) Name — <em>nomen</em> means "name".</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">2. Which of the following is not a noun?</div>
+              <div class="a"><strong>Answer:</strong> B) Run — "run" is primarily a verb (it can be a noun in some contexts, but here the intended non-noun is B).</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">3. Explain why nouns are essential in everyday communication using the hamburger example.</div>
+              <div class="a">
+                <strong>Answer:</strong> Nouns name the items we talk about — for a hamburger scenario: <em>hamburger</em> (thing), <em>restaurant</em> (place), <em>chef</em> (person), and <em>hunger</em> (idea/feeling). Using these nouns, we can say “The chef at the restaurant made my hamburger because I had hunger,” which gives clear, concrete information. Without nouns—no clear subjects, objects, or places—it's hard to understand who does what or what is being discussed.
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">4. Define a noun and give two examples from each category: people, places, things, and ideas.</div>
+              <div class="a">
+                <strong>Answer:</strong> A noun is a word that names a person, place, thing, or idea.<br>
+                <em>People:</em> teacher, Maria. <br>
+                <em>Places:</em> Liberia, library. <br>
+                <em>Things:</em> phone, refrigerator. <br>
+                <em>Ideas:</em> freedom, honesty.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div id="s2" class="block">
+          <div class="section-header" data-toggle="panel2">
+            <div class="left">
+              <div style="font-size:20px">🧩</div>
+              <div>
+                <h2>Section 2: Types of Nouns</h2>
+                <p>Fill-in, matching, true/false</p>
+              </div>
+            </div>
+            <div class="right"><div class="chev">▸</div></div>
+          </div>
+          <div id="panel2" class="panel">
+
+            <div class="qa">
+              <div class="q">5. Common nouns begin with ____ letters unless they start a sentence.</div>
+              <div class="a"><strong>Answer:</strong> lowercase</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">6. Proper nouns always begin with ____ letters.</div>
+              <div class="a"><strong>Answer:</strong> capital</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">Matching — Match the noun to its type:</div>
+              <div class="a">
+                <strong>Noun → Type</strong><br>
+                • Scarlet O’Hara → D. Proper<br>
+                • Refrigerator → B. Concrete<br>
+                • Honesty → C. Abstract<br>
+                • Denmark → D. Proper
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">7. True or False: All nouns are either concrete or abstract, and either common or proper.</div>
+              <div class="a"><strong>Answer:</strong> True — these are common classification axes (common/proper; concrete/abstract).</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">8. True or False: The noun “Toyota” is both proper and abstract.</div>
+              <div class="a"><strong>Answer:</strong> False — "Toyota" is a proper noun; it's concrete (a brand/name for physical cars), not abstract.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div id="s3" class="block">
+          <div class="section-header" data-toggle="panel3">
+            <div class="left">
+              <div style="font-size:20px">🧪</div>
+              <div>
+                <h2>Section 3: Recognizing Nouns</h2>
+                <p>Multiple choice & noncount nouns</p>
+              </div>
+            </div>
+            <div class="right"><div class="chev">▸</div></div>
+          </div>
+          <div id="panel3" class="panel">
+
+            <div class="qa">
+              <div class="q">9. Which of the following is a good test for identifying a noun?</div>
+              <div class="a"><strong>Answer:</strong> B) Can it be made plural or possessive? — forming plurals/possessives is a useful test for nouns.</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">10. Which of the following is a noncount noun?</div>
+              <div class="a"><strong>Answer:</strong> A) Gold — "gold" is typically uncountable (mass noun).</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div id="s4" class="block">
+          <div class="section-header" data-toggle="panel4">
+            <div class="left">
+              <div style="font-size:20px">🧬</div>
+              <div>
+                <h2>Section 4: Properties of Nouns</h2>
+                <p>Short answer + MC</p>
+              </div>
+            </div>
+            <div class="right"><div class="chev">▸</div></div>
+          </div>
+          <div id="panel4" class="panel">
+
+            <div class="qa">
+              <div class="q">11. List and briefly explain the four properties of nouns.</div>
+              <div class="a">
+                <strong>Answer:</strong><br>
+                • <strong>Number:</strong> singular vs plural (cat/cats).<br>
+                • <strong>Countability:</strong> count nouns vs noncount (apple vs water).<br>
+                • <strong>Case/Role:</strong> grammatical role (subject/object/possessive). In English this shows in word order and possessive forms (the dog's bone).<br>
+                • <strong>Gender (where applicable):</strong> grammatical or natural gender (English mostly uses natural gender).
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">12. What is the difference between grammatical gender and natural gender in English?</div>
+              <div class="a">
+                <strong>Answer:</strong> Grammatical gender is a language feature that assigns nouns to classes (masculine/feminine/neuter) often arbitrarily (common in languages like Spanish). Natural gender refers to biological/social gender tied to meaning (e.g., "mother" = female). English largely uses natural gender (he/she) rather than grammatical gender for most nouns.
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">13. In English, the noun “teacher” is:</div>
+              <div class="a"><strong>Answer:</strong> D) Gender-neutral — "teacher" can refer to any gender unless otherwise specified.</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div id="s5" class="block">
+          <div class="section-header" data-toggle="panel5">
+            <div class="left">
+              <div style="font-size:20px">🔠</div>
+              <div>
+                <h2>Section 5: Gender in Nouns</h2>
+                <p>Forms + true/false</p>
+              </div>
+            </div>
+            <div class="right"><div class="chev">▸</div></div>
+          </div>
+          <div id="panel5" class="panel">
+
+            <div class="qa">
+              <div class="q">14. The feminine form of “duke” is ____.</div>
+              <div class="a"><strong>Answer:</strong> duchess</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">15. The masculine form of “waitress” is ____.</div>
+              <div class="a"><strong>Answer:</strong> waiter</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">16. True or False: Gender distinctions in nouns are becoming less common in modern English.</div>
+              <div class="a"><strong>Answer:</strong> True — English is shifting toward gender-neutral terms (e.g., "firefighter" instead of "fireman").</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">17. True or False: The word “flight attendant” is gender-specific.</div>
+              <div class="a"><strong>Answer:</strong> False — "flight attendant" is gender-neutral and replaced older gendered terms like "stewardess".
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div id="s6" class="block">
+          <div class="section-header" data-toggle="panel6">
+            <div class="left">
+              <div style="font-size:20px">🔁</div>
+              <div>
+                <h2>Section 6: Pluralization Rules</h2>
+                <p>MC & short answers</p>
+              </div>
+            </div>
+            <div class="right"><div class="chev">▸</div></div>
+          </div>
+          <div id="panel6" class="panel">
+
+            <div class="qa">
+              <div class="q">18. What is the correct plural of “baby”?</div>
+              <div class="a"><strong>Answer:</strong> B) Babies — change -y to -ies when preceded by a consonant.</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">19. Which word correctly follows the rule: add -es to nouns ending in a hissing sound?</div>
+              <div class="a"><strong>Answer:</strong> B) Match → matches (add -es for words ending in s, sh, ch, x, z).</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">20. Explain the difference in pluralization between “potato” and “piano.”</div>
+              <div class="a">
+                <strong>Answer:</strong> "Potato" typically forms its plural with -es → potatoes (many English words ending in consonant + -o add -es), while "piano" usually takes a simple -s → pianos (words of foreign origin or certain established words take -s). There are exceptions; memorization and common usage determine the plural form.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 7 -->
+        <div id="s7" class="block">
+          <div class="section-header" data-toggle="panel7">
+            <div class="left">
+              <div style="font-size:20px">🌍</div>
+              <div>
+                <h2>Section 7: Irregular and Invariable Nouns</h2>
+                <p>Fill-in & T/F</p>
+              </div>
+            </div>
+            <div class="right"><div class="chev">▸</div></div>
+          </div>
+          <div id="panel7" class="panel">
+
+            <div class="qa">
+              <div class="q">21. The plural of “alumna” is ____.</div>
+              <div class="a"><strong>Answer:</strong> alumnae</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">22. The plural of “alumnus” is ____.</div>
+              <div class="a"><strong>Answer:</strong> alumni</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">23. True or False: The word “deer” changes form when pluralized.</div>
+              <div class="a"><strong>Answer:</strong> False — "deer" is the same in singular and plural.</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">24. True or False: “Species” is an example of an invariable noun.</div>
+              <div class="a"><strong>Answer:</strong> True — "species" is the same singular and plural (context shows number).</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 8 -->
+        <div id="s8" class="block">
+          <div class="section-header" data-toggle="panel8">
+            <div class="left">
+              <div style="font-size:20px">🧠</div>
+              <div>
+                <h2>Section 8: Collective Nouns</h2>
+                <p>MC & short answer</p>
+              </div>
+            </div>
+            <div class="right"><div class="chev">▸</div></div>
+          </div>
+          <div id="panel8" class="panel">
+
+            <div class="qa">
+              <div class="q">25. Which of the following is a collective noun?</div>
+              <div class="a"><strong>Answer:</strong> B) Commonality — in this set, "commonality" refers to shared attributes that can group items (note: typical collective nouns are "team," "audience," "flock").</div>
+            </div>
+
+            <div class="qa">
+              <div class="q">26. What does the word “commonality” mean in the context of collective nouns?</div>
+              <div class="a">
+                <strong>Answer:</strong> "Commonality" means the set of shared features or traits that link individual members into a recognizable group. In discussion of collective nouns, it explains why items are grouped (shared characteristic = commonality).
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 9 -->
+        <div id="s9" class="block">
+          <div class="section-header" data-toggle="panel9">
+            <div class="left">
+              <div style="font-size:20px">🇬🇧</div>
+              <div>
+                <h2>Section 9: British vs. American English & Extras</h2>
+                <p>Matching, compounds, plurals, verbs, moods, tense, etc.</p>
+              </div>
+            </div>
+            <div class="right"><div class="chev">▸</div></div>
+          </div>
+          <div id="panel9" class="panel">
+
+            <div class="qa">
+              <div class="q">Match American → British</div>
+              <div class="a">
+                Elevator → A. Lift<br>
+                Cookie → B. Biscuit<br>
+                Truck → C. Lorry<br>
+                Diaper → D. Nappy
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">Compound words — Q1 & Q2</div>
+              <div class="a">
+                Q1: Which is a compound word? <strong>basketball</strong>.<br>
+                Q2: Correct example? <strong>sunflower</strong>.
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">Pluralization of numerals, letters, and abbreviations</div>
+              <div class="a">
+                • 1980 → <code class="inline">1980s</code>.<br>
+                • Single letter plural: add apostrophe + s → <code class="inline">p’s</code>.<br>
+                • <code class="inline">Ph.D.</code> plural: <code class="inline">Ph.D.’s</code>.<br>
+                • <code class="inline">TV</code> plural: <code class="inline">TVs</code> (no apostrophe).<br>
+                • Lowercase letter plural: <code class="inline">a’s</code>.<br>
+                • CPA → CPAs.<br>
+                • Internal periods: I.O.U. → I.O.U.’s.
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">Main-purpose sentences & other quick answers</div>
+              <div class="a">
+                • Professor Oak: wants easy-to-grow, colorful plants.<br>
+                • Larry’s desk comment: He disliked the desk because it didn’t work well (didn’t support the pencil sharpener).
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">Verbs and verb types — quick answers</div>
+              <div class="a">
+                • Action verb example: <em>jumped</em>.<br>
+                • Linking verb example: <em>are</em> (links subject to complement).<br>
+                • Role of linking verb: join subject to complement.
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">Short grammar & mood reminders</div>
+              <div class="a">
+                • Proper noun example: Scarlet O’Hara.<br>
+                • Common nouns begin lowercase.<br>
+                • Verb phrase example: <em>was recited</em>.<br>
+                • Verb expresses action, existence, or condition.<br>
+                • Passive voice identification: subject receives the action; look for "was/were + past participle" and often "by..." clause.<br>
+                • Imperative mood = commands (e.g., "Wipe that grin off your face!").<br>
+                • Subjunctive expresses wishes/hypotheticals (e.g., "I wish I were taller.").
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">Pluralization & irregular verbs (quick reference)</div>
+              <div class="a">
+                • potato → potatoes; photo → photos; hero → heroes (consonant + o often → -es).<br>
+                • alumna → alumnae; alumnus → alumni.<br>
+                • deer → deer (no change); species → species (invariable).<br>
+                • Principal parts example: drink – drank – drunk; swim – swam – swum.
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">Subject-verb agreement & special cases</div>
+              <div class="a">
+                • Rule: singular subject → singular verb; plural subject → plural verb.<br>
+                • "Either...or" agrees with the subject closest to the verb (use the closest subject to choose singular/plural form).<br>
+                • Collective noun takes singular verb when the group is one unit; plural when individuals within act separately.<br>
+                • Example: "One of the escaped convicts was captured." (correct)
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="q">Irregular verb quick quiz answers (selected)</div>
+              <div class="a">
+                • Blow → past: blew.<br>
+                • Break → past participle: broken.<br>
+                • Choose → choose – chose – chosen.<br>
+                • Burst → burst – burst – burst (same form).
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- End of sections -->
+
+        <div style="padding:12px;text-align:center;color:var(--muted);font-size:13px">
+          Good luck on your midterm — review each accordion and use the examples to quiz yourself. 🍀
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Interaction script: accordion + icon buttons -->
+  <script>
+    // Toggle panels with smooth reveal
+    document.querySelectorAll('[data-toggle]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pid = btn.getAttribute('data-toggle');
+        const panel = document.getElementById(pid);
+        const chev = btn.querySelector('.chev') || btn.parentElement.querySelector('.chev');
+        if (!panel) return;
+        const isOpen = panel.style.display === 'block';
+        // close all other panels
+        document.querySelectorAll('.panel').forEach(p => {
+          if (p !== panel) { p.style.display = 'none'; p.previousElementSibling?.querySelector('.chev')?.style.setProperty('transform',''); }
+        });
+        if (isOpen) {
+          panel.style.display = 'none';
+          if (chev) chev.style.transform = '';
+        } else {
+          panel.style.display = 'block';
+          if (chev) chev.style.transform = 'rotate(90deg)';
+          // scroll into view a bit
+          panel.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+      });
+    });
+
+    // Icon buttons: open the associated panel and scroll
+    document.querySelectorAll('.icon-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        const section = document.getElementById(target);
+        if (!section) return;
+        const header = section.querySelector('[data-toggle]');
+        if (header) header.click();
+      });
+    });
+
+    // Make the first section open by default
+    window.addEventListener('load', () => {
+      const firstToggle = document.querySelector('[data-toggle]');
+      if (firstToggle) firstToggle.click();
+    });
+  </script>
+</body>
+</html>
   <style>
     /* [Very long CSS as in previous completions, including dark mode, cards, chat, etc.] */
     :root{--bg:#f1f5f9;--card:#fff;--accent:#1e40af;--muted:#5b6b77;--gold:#d97706;--success:#22c55e;--danger:#c0392b;--dark-bg:#0b1220;--dark-card:#171a25;--dark-accent:#60a5fa;}
