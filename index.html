@@ -1,612 +1,723 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Smythe University College (S.U.C) — Freshman Students Preparation Web (Firebase)</title>
-
-<!-- Minimal styling -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Smythe University College — Freshman Prep (S.U.C)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#f7fbff;--card:#fff;--accent:#0b63d6;--muted:#556;--gold:#d97706}
-  body{font-family:Inter,system-ui,Arial;margin:0;background:var(--bg);color:#07203b}
-  .wrap{max-width:1200px;margin:18px auto;padding:18px}
-  header{display:flex;gap:12px;align-items:center}
-  .logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:grid;place-items:center;color:white;font-weight:800}
+  :root{
+    --bg:#f4f7fb; --card:#fff; --accent:#0b63d6; --muted:#6b7280; --glass:rgba(255,255,255,0.6);
+    --success:#16a34a; --danger:#ef4444;
+  }
+  [data-theme="dark"]{
+    --bg:#071023; --card:#0b1220; --accent:#60a5fa; --muted:#9aa6b2; --glass:rgba(11,17,26,0.65);
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#06202e;background:linear-gradient(180deg,var(--bg),#ffffff);margin:0}
+  .app{max-width:1200px;margin:18px auto;padding:18px}
+  header{display:flex;align-items:center;gap:16px}
+  .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#3b82f6);display:grid;place-items:center;color:white;font-weight:800}
+  h1{margin:0;font-size:18px}
+  .sub{color:var(--muted);font-size:13px}
   nav{margin-left:auto;display:flex;gap:8px;align-items:center}
-  .btn{background:var(--accent);color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
-  .btn.alt{background:#fff;color:var(--accent);border:1px solid rgba(11,99,214,0.12)}
-  .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.06);margin-top:14px}
-  .courses{display:flex;gap:8px;flex-wrap:wrap}
-  .course{padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,0.8),transparent)}
-  .panel{display:flex;gap:12px}
-  .left{flex:1}
-  .right{width:360px}
-  input,select,textarea{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(2,6,23,0.06);margin:6px 0}
-  .chat{height:300px;overflow:auto;border-radius:8px;padding:8px;border:1px solid rgba(2,6,23,0.06);background:#fbfdff}
-  .msg{padding:6px;border-radius:8px;margin-bottom:6px}
-  .msg.system{background:#f1f5f9;color:#333;font-style:italic}
-  .muted{color:var(--muted);font-size:13px}
-  .small{font-size:13px}
-  .avatar{width:40px;height:40;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 4px 10px rgba(2,6,23,0.08)}
-  .profile{display:flex;gap:10px;align-items:center}
-  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  button{cursor:pointer}
+  .btn{background:var(--accent);color:white;border:none;padding:8px 12px;border-radius:10px;font-weight:600}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,99,214,0.12)}
+  .layout{display:grid;grid-template-columns:260px 1fr 360px;gap:14px;margin-top:16px}
+  .card{background:var(--card);padding:12px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.06)}
+  .sidebar .course{padding:10px;border-radius:8px;margin-bottom:8px;display:flex;align-items:center;gap:8px;cursor:pointer}
+  .course.active{background:linear-gradient(90deg,rgba(11,99,214,0.08),transparent);border-left:4px solid var(--accent)}
+  .search{display:flex;gap:8px;margin-bottom:12px}
+  input,select,textarea{padding:10px;border-radius:8px;border:1px solid rgba(2,6,23,0.06);width:100%}
+  .content h2{margin-top:0}
+  .question{padding:10px;border-radius:8px;border:1px solid rgba(2,6,23,0.04);margin-bottom:10px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.01))}
+  .qa-meta{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px;margin-bottom:8px}
+  .chat{height:360px;overflow:auto;padding:8px;border-radius:8px;border:1px solid rgba(2,6,23,0.06);background:linear-gradient(180deg,var(--card),#f8fbff)}
+  .msg{padding:8px;border-radius:8px;margin-bottom:8px}
+  .msg.me{background:linear-gradient(90deg,var(--accent),#60a5fa);color:white}
+  .msg.other{background:#f1f5f9}
+  .controls{display:flex;gap:8px;align-items:center;margin-top:8px}
+  .small{font-size:13px;color:var(--muted)}
+  .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef2ff;color:var(--accent);font-weight:600}
+  .toggle{display:inline-flex;align-items:center;gap:8px}
   .hidden{display:none}
-  pre{white-space:pre-wrap;padding:10px;background:#f8fafc;border-radius:8px}
-  .course-chat-select{display:flex;gap:8px;align-items:center}
-  .moderator-badge{display:inline-block;padding:4px 8px;background:#ffe6b3;color:#996600;border-radius:999px;font-size:12px}
-  .file-drop{border:2px dashed rgba(11,99,214,0.12);padding:12px;border-radius:10px;text-align:center;margin-top:8px;background:linear-gradient(180deg,rgba(255,255,255,0.6),transparent)}
-  .editor{min-height:160px;border-radius:8px;border:1px solid rgba(2,6,23,0.06);padding:8px;background:#fff}
+  .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+  .quiz-result{padding:12px;border-radius:8px;background:#f8fafc}
+  .bookmark{float:right;background:transparent;border:none;cursor:pointer}
+  .file-drop{border:2px dashed rgba(11,99,214,0.12);padding:10px;border-radius:8px;text-align:center}
+  footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+  @media(max-width:1000px){ .layout{grid-template-columns:1fr; } .right{order:3} }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="logo">SUC</div>
-      <div>
-        <h1 style="margin:0">Smythe University College — Freshman Students Preparation Web</h1>
-        <div class="muted">Prepared by Student Akin S. Sokpah</div>
+<div class="app" id="app">
+  <header>
+    <div class="logo">SUC</div>
+    <div>
+      <h1>Smythe University College — Freshman Students Preparation</h1>
+      <div class="sub">Prepared by Student Akin S. Sokpah — Modernized student portal</div>
+    </div>
+
+    <nav>
+      <div class="toggle">
+        <label class="small">Theme</label>
+        <button id="themeBtn" class="btn ghost">Toggle Dark</button>
       </div>
+      <div id="authArea">
+        <button id="googleSignIn" class="btn">Sign in with Google</button>
+        <button id="emailBtn" class="btn ghost">Email Sign-in</button>
+        <button id="signOutBtn" class="btn ghost hidden">Sign Out</button>
+      </div>
+    </nav>
+  </header>
 
-      <nav>
-        <div id="userPanel" style="display:flex;gap:10px;align-items:center">
-          <div id="userInfo" class="muted">Not signed in</div>
-          <button id="btnAuth" class="btn">Sign In / Sign Up</button>
-          <button id="btnSignOut" class="btn alt hidden">Sign Out</button>
-        </div>
-      </nav>
-    </header>
-
-    <section class="card">
+  <div class="layout">
+    <!-- left sidebar -->
+    <div class="sidebar card">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <strong>Courses</strong>
-        <div class="muted small">Click a course to view content and join course chat</div>
+        <div><strong>Courses</strong><div class="small">Click to open</div></div>
+        <div class="badge" id="userBadge">Guest</div>
       </div>
 
-      <div style="margin-top:12px" class="courses">
-        <div class="course" data-course="English.101">🧠 English.101</div>
+      <div class="search" style="margin-top:12px">
+        <input id="globalSearch" placeholder="Search questions, topics..." />
+        <button id="searchBtn" class="btn ghost">Search</button>
+      </div>
+
+      <div id="courseList">
+        <div class="course active" data-course="English.101">🧠 English.101</div>
         <div class="course" data-course="Mathematics.101">🧮 Mathematics.101</div>
         <div class="course" data-course="Biology.101">🧬 Biology.101</div>
         <div class="course" data-course="Chemistry.101">⚗️ Chemistry.101 (placeholder)</div>
-        <div class="course" data-course="PE.101">🏃 PE.101 (placeholder)</div>
         <div class="course" data-course="COSC.101">💻 COSC.101 (placeholder)</div>
-        <div class="course" data-course="LabBio.101">🔬 Lab Biology (placeholder)</div>
-        <div class="course" data-course="LabChem.101">🧪 Lab Chemistry (placeholder)</div>
-      </div>
-    </section>
-
-    <div class="card panel">
-      <!-- left: course content -->
-      <div class="left">
-        <div id="courseContent" class="card">
-          <h3 id="courseTitle">Select a course</h3>
-
-          <!-- ENGLISH content (already populated) -->
-          <div id="English.101.content" class="course-panel hidden">
-            <h4>English.101 — Nouns, Verbs, Mood, Agreement</h4>
-            <div class="muted small">Complete Q&A (loaded from earlier materials)</div>
-            <div style="margin-top:12px">
-              <strong>Example Qs (full set included in the app):</strong>
-              <div class="qa"><strong>1.</strong> What does the Latin root <em>nomen</em> mean? — <em>Answer:</em> Name.</div>
-              <div class="qa"><strong>2.</strong> Which of the following is not a noun? — <em>Answer:</em> Run (primarily a verb).</div>
-              <div class="qa"><strong>3.</strong> ... (full English questions & answers are included)</div>
-              <pre id="englishFull"></pre>
-            </div>
-          </div>
-
-          <!-- MATH content -->
-          <div id="Mathematics.101.content" class="course-panel hidden">
-            <h4>Mathematics.101 — Fractions, Percentages, Interest, Standard Form</h4>
-            <div class="muted small">Corrected and formatted math questions and answers</div>
-            <div style="margin-top:10px">
-              <pre id="mathFull"></pre>
-            </div>
-          </div>
-
-          <!-- BIOLOGY content -->
-          <div id="Biology.101.content" class="course-panel hidden">
-            <h4>Biology.101 — Question Bank</h4>
-            <div class="muted small">You can import a DOCX file (client-side) or paste the content below</div>
-
-            <div style="margin-top:10px">
-              <div class="file-drop" id="bioDrop">
-                <div><strong>Import Biology DOCX</strong></div>
-                <div class="muted small">Click to select the DOCX file (e.g., "2025 boilogy question Banks.docx") or drag & drop it here. The file is parsed in your browser and saved to the Biology course content in Firestore.</div>
-                <input type="file" id="bioFileInput" accept=".docx" style="margin-top:8px"/>
-                <div style="margin-top:8px">
-                  <button class="btn" id="importBioBtn">Import & Save to Biology.101 (Firestore)</button>
-                </div>
-              </div>
-
-              <div style="margin-top:12px">
-                <div><strong>Or paste / edit Biology content (rich text):</strong></div>
-                <div id="bioEditor" class="editor" contenteditable="true" placeholder="Paste biology bank here..."></div>
-                <div class="controls">
-                  <button class="btn" id="saveBioBtn">Save Biology Content to Firestore</button>
-                  <button class="btn alt" id="loadBioBtn">Load Saved Biology Content</button>
-                </div>
-              </div>
-
-              <div style="margin-top:12px">
-                <strong>Biology (current saved content):</strong>
-                <div id="bioSaved" style="margin-top:10px"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- default -->
-          <div id="placeholderPanel" class="course-panel">
-            <p class="muted">Choose a course from the menu on top to view content and join the course chat.</p>
-          </div>
-        </div>
-
-        <!-- profile / edit -->
-        <div class="card" style="margin-top:12px">
-          <h4>Your Profile</h4>
-          <div id="profileArea">
-            <div class="profile" id="profilePreview"><img id="avatarImg" class="avatar hidden" alt="avatar"/><div id="profileName" class="muted">Not signed in</div></div>
-
-            <div id="profileEditor" class="hidden" style="margin-top:8px">
-              <input id="editName" placeholder="Full name"/>
-              <select id="editCourse">
-                <option>English.101</option><option>Mathematics.101</option><option>Biology.101</option><option>Chemistry.101</option>
-              </select>
-              <div style="display:flex;gap:8px;align-items:center">
-                <input type="file" id="avatarFile" accept="image/*"/>
-                <button class="btn" id="uploadAvatarBtn">Upload Avatar</button>
-              </div>
-              <div class="controls">
-                <button class="btn" id="saveProfileBtn">Save Profile</button>
-                <button class="btn alt" id="cancelEditProfile">Cancel</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
-      <!-- right: chat & controls -->
-      <div class="right">
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <strong>Group Chat</strong>
-            <div class="muted small">Public room & course rooms</div>
-          </div>
-
-          <div style="margin-top:8px" class="course-chat-select">
-            <label for="chatCourse" class="small muted">Room:</label>
-            <select id="chatCourse">
-              <option value="group_chat">Public — S.U.C Group</option>
-              <option value="group_chat/English.101">English.101</option>
-              <option value="group_chat/Mathematics.101">Mathematics.101</option>
-              <option value="group_chat/Biology.101">Biology.101</option>
-            </select>
-          </div>
-
-          <div id="chatBox" class="chat" style="margin-top:8px"></div>
-
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <input id="chatInput" placeholder="Write message..." />
-            <button class="btn" id="sendChatBtn">Send</button>
-          </div>
-
-          <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
-            <button class="btn alt" id="clearChatLocal">Clear view</button>
-            <div id="moderatorTools" style="margin-left:auto;display:none">
-              <button class="btn" id="purgeRoomBtn" title="Delete all messages in this room (moderator only)">Purge Room</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:12px">
-          <strong>Admin / Moderation</strong>
-          <div class="muted small">Users with <code>role: "moderator"</code> in their profile can delete messages and purge rooms.</div>
-          <div style="margin-top:8px">
-            <button class="btn alt" id="requestModBtn">Request moderator (sends request)</button>
-            <div id="modMsg" class="muted small" style="margin-top:8px"></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Auth modal -->
-    <div id="authModal" class="card hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);display:grid;place-items:center">
-      <div style="max-width:420px;width:100%;padding:14px;background:var(--card);border-radius:10px">
-        <h3 id="authTitle">Sign Up</h3>
-        <div class="muted small" id="authSubtitle">Create an account or sign in</div>
-        <input id="authName" placeholder="Full name"/>
-        <input id="authEmail" placeholder="Email"/>
-        <input id="authPassword" placeholder="Password" type="password"/>
-        <select id="authCourse"><option>English.101</option><option>Mathematics.101</option><option>Biology.101</option></select>
+      <div style="margin-top:12px">
+        <div class="small">Quick actions</div>
         <div style="display:flex;gap:8px;margin-top:8px">
-          <button class="btn" id="authActionBtn">Create account</button>
-          <button class="btn alt" id="authToggleBtn">Switch to Sign In</button>
-          <button class="btn alt" id="authCloseBtn">Close</button>
+          <button id="quizBtn" class="btn">Start Quiz</button>
+          <button id="bookmarksBtn" class="btn ghost">Bookmarks</button>
         </div>
-        <div id="authFeedback" class="muted small" style="margin-top:8px"></div>
+      </div>
+
+      <div style="margin-top:12px" class="card">
+        <strong>Import / Export</strong>
+        <div class="small">Upload Biology DOCX or export course JSON</div>
+        <div class="file-drop" style="margin-top:8px">
+          <input id="docxInput" type="file" accept=".docx" />
+          <div style="margin-top:8px"><button id="importDocxBtn" class="btn">Import DOCX (client-side)</button></div>
+          <div style="margin-top:8px"><button id="exportCoursesBtn" class="btn ghost">Export Courses (JSON)</button></div>
+        </div>
       </div>
     </div>
 
+    <!-- center content -->
+    <main class="content">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <h2 id="courseTitle">English.101</h2>
+            <div class="small" id="courseSub">Nouns, Verbs, Voice, Mood, Agreement</div>
+          </div>
+          <div>
+            <button id="bookmarkCourse" class="btn ghost">Bookmark Course</button>
+          </div>
+        </div>
+
+        <div id="courseMeta" style="margin-top:12px;display:flex;gap:8px;align-items:center">
+          <div class="small">Questions: <span id="qCount">0</span></div>
+          <div class="small">Quizzes taken: <span id="quizCount">0</span></div>
+          <div class="small">Progress: <span id="progress">0%</span></div>
+        </div>
+
+        <div id="contentList" style="margin-top:12px"></div>
+
+        <div id="quizArea" class="hidden" style="margin-top:12px"></div>
+      </div>
+    </main>
+
+    <!-- right: chat & profile -->
+    <aside class="right card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong>Course Chat</strong>
+        <div class="small">Public & course rooms</div>
+      </div>
+
+      <div style="margin-top:8px">
+        <select id="chatRoomSelect" style="width:100%;padding:8px;border-radius:8px">
+          <option value="group_chat">Public — S.U.C Group</option>
+          <option value="group_chat/English.101">English.101</option>
+          <option value="group_chat/Mathematics.101">Mathematics.101</option>
+          <option value="group_chat/Biology.101">Biology.101</option>
+        </select>
+      </div>
+
+      <div id="chatBox" class="chat" style="margin-top:8px"></div>
+      <div class="controls">
+        <input id="chatInput" placeholder="Say something..." />
+        <button id="sendChat" class="btn">Send</button>
+      </div>
+
+      <div style="margin-top:12px" class="card">
+        <div style="display:flex;gap:8px;align-items:center">
+          <img id="avatarPreview" src="" alt="avatar" style="width:48px;height:48px;border-radius:50%;display:none" />
+          <div>
+            <div id="profileNameDisplay" class="small">Not signed in</div>
+            <div id="profileEmailDisplay" class="sub"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:8px">
+          <input id="avatarFileInput" type="file" accept="image/*" />
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button id="uploadAvatar" class="btn ghost">Upload Avatar</button>
+            <button id="editProfileBtn" class="btn ghost">Edit Profile</button>
+          </div>
+        </div>
+
+        <div id="moderatorPanel" class="hidden" style="margin-top:12px">
+          <strong>Moderator Tools</strong>
+          <div style="margin-top:8px">
+            <button id="purgeRoom" class="btn" style="background:var(--danger)">Purge Room</button>
+            <button id="viewReports" class="btn ghost">View Reports</button>
+          </div>
+        </div>
+      </div>
+    </aside>
   </div>
 
-  <!-- Include Mammoth for client-side docx -> html conversion -->
-  <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+  <footer>
+    © Smythe University College (S.U.C) — Built for Students by Akin S. Sokpah. Use responsibly — secure your Firebase rules.
+  </footer>
+</div>
 
-  <!-- Firebase v9 modular from CDN -->
-  <script type="module">
-    // Firebase imports
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js';
-    import { getFirestore, doc, setDoc, getDoc, getDocs, collection, query, where, addDoc, updateDoc, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
-    import { getDatabase, ref, push, onChildAdded, onValue, remove } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js';
-    import { getStorage, ref as sref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js';
+<!-- Mammoth (DOCX client-side) -->
+<script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
 
-    // ---- Your Firebase config (you provided earlier) ----
-    const firebaseConfig = {
-      apiKey: "AIzaSyC7cAN-mrE2PvmlQ11zLKAdHBhN7nUFjHw",
-      authDomain: "fir-u-c-students-web.firebaseapp.com",
-      projectId: "fir-u-c-students-web",
-      storageBucket: "fir-u-c-students-web.firebasestorage.app",
-      messagingSenderId: "113569186739",
-      appId: "1:113569186739:web:d8daf21059f43a79e841c6"
-    };
+<!-- Firebase modular SDK -->
+<script type="module">
+/* ====== Firebase initialization and app logic ======
+   - Uses your provided firebaseConfig (Google Sign-In enabled).
+   - Make sure in Firebase Console you enable Google provider and Email/Password.
+*/
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, getDocs, collection, query, where, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getDatabase, ref, push, onChildAdded, remove, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
-    // Initialize firebase services
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const firestore = getFirestore(app);
-    const rdb = getDatabase(app);
-    const storage = getStorage(app);
+/* ---------- Paste your Firebase config here ---------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyC7cAN-mrE2PvmlQ11zLKAdHBhN7nUFjHw",
+  authDomain: "fir-u-c-students-web.firebaseapp.com",
+  projectId: "fir-u-c-students-web",
+  storageBucket: "fir-u-c-students-web.firebasestorage.app",
+  messagingSenderId: "113569186739",
+  appId: "1:113569186739:web:d8daf21059f43a79e841c6"
+};
 
-    // UI refs
-    const btnAuth = document.getElementById('btnAuth');
-    const btnSignOut = document.getElementById('btnSignOut');
-    const userInfo = document.getElementById('userInfo');
-    const authModal = document.getElementById('authModal');
-    const authTitle = document.getElementById('authTitle');
-    const authActionBtn = document.getElementById('authActionBtn');
-    const authToggleBtn = document.getElementById('authToggleBtn');
-    const authCloseBtn = document.getElementById('authCloseBtn');
-    const authName = document.getElementById('authName');
-    const authEmail = document.getElementById('authEmail');
-    const authPassword = document.getElementById('authPassword');
-    const authCourse = document.getElementById('authCourse');
-    const authFeedback = document.getElementById('authFeedback');
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
+const rdb = getDatabase(app);
+const storage = getStorage(app);
 
-    const profilePreview = document.getElementById('profilePreview');
-    const profileName = document.getElementById('profileName');
-    const avatarImg = document.getElementById('avatarImg');
-    const profileEditor = document.getElementById('profileEditor');
-    const editName = document.getElementById('editName');
-    const editCourse = document.getElementById('editCourse');
-    const avatarFile = document.getElementById('avatarFile');
-    const uploadAvatarBtn = document.getElementById('uploadAvatarBtn');
-    const saveProfileBtn = document.getElementById('saveProfileBtn');
-    const cancelEditProfile = document.getElementById('cancelEditProfile');
+/* ======== UI refs ======== */
+const googleSignIn = document.getElementById('googleSignIn');
+const emailBtn = document.getElementById('emailBtn');
+const signOutBtn = document.getElementById('signOutBtn');
+const userBadge = document.getElementById('userBadge');
+const profileNameDisplay = document.getElementById('profileNameDisplay');
+const profileEmailDisplay = document.getElementById('profileEmailDisplay');
+const avatarPreview = document.getElementById('avatarPreview');
+const uploadAvatar = document.getElementById('uploadAvatar');
+const avatarFileInput = document.getElementById('avatarFileInput');
+const editProfileBtn = document.getElementById('editProfileBtn');
 
-    const courseEls = document.querySelectorAll('.course');
-    const courseTitle = document.getElementById('courseTitle');
-    const coursePanels = document.querySelectorAll('.course-panel');
-    const placeholderPanel = document.getElementById('placeholderPanel');
+const courseEls = document.querySelectorAll('.course');
+const courseTitle = document.getElementById('courseTitle');
+const courseSub = document.getElementById('courseSub');
+const contentList = document.getElementById('contentList');
+const qCount = document.getElementById('qCount');
+const quizBtn = document.getElementById('quizBtn');
+const quizArea = document.getElementById('quizArea');
+const bookmarkCourse = document.getElementById('bookmarkCourse');
+const bookmarksBtn = document.getElementById('bookmarksBtn');
 
-    const chatBox = document.getElementById('chatBox');
-    const chatInput = document.getElementById('chatInput');
-    const sendChatBtn = document.getElementById('sendChatBtn');
-    const chatCourseSelect = document.getElementById('chatCourse');
-    const purgeRoomBtn = document.getElementById('purgeRoomBtn');
-    const moderatorTools = document.getElementById('moderatorTools');
-    const modMsg = document.getElementById('modMsg');
-    const requestModBtn = document.getElementById('requestModBtn');
+const chatBox = document.getElementById('chatBox');
+const sendChat = document.getElementById('sendChat');
+const chatInput = document.getElementById('chatInput');
+const chatRoomSelect = document.getElementById('chatRoomSelect');
 
-    // Biology import UI
-    const bioFileInput = document.getElementById('bioFileInput');
-    const importBioBtn = document.getElementById('importBioBtn');
-    const bioEditor = document.getElementById('bioEditor');
-    const saveBioBtn = document.getElementById('saveBioBtn');
-    const loadBioBtn = document.getElementById('loadBioBtn');
-    const bioSaved = document.getElementById('bioSaved');
+const themeBtn = document.getElementById('themeBtn');
+const globalSearch = document.getElementById('globalSearch');
+const searchBtn = document.getElementById('searchBtn');
+const importDocxBtn = document.getElementById('importDocxBtn');
+const docxInput = document.getElementById('docxInput');
+const exportCoursesBtn = document.getElementById('exportCoursesBtn');
 
-    // Math and English content containers
-    const mathFull = document.getElementById('mathFull');
-    const englishFull = document.getElementById('englishFull');
+const purgeRoom = document.getElementById('purgeRoom');
+const moderatorPanel = document.getElementById('moderatorPanel');
+const viewReports = document.getElementById('viewReports');
 
-    // populate math & english text (the corrected math content and the english content from earlier)
-    englishFull.textContent = `Full English.101 Q&A included: Section 1 — Definition & Function of Nouns
-1. What does the Latin root 'nomen' mean? — Name.
-2. Which of the following is not a noun? — Run (primarily a verb).
-... (rest of the English content: all questions & answers from the previous English bank are included here for review and study).
-`;
-    mathFull.textContent = `Mathematics.101 — Fractions: Types & Operations (selected)
-Types of fractions: proper, improper, like, unlike, mixed numbers.
-Examples (addition, subtraction, multiplication, division) as corrected:
-2/5 + 1/2 = 9/10
-4/5 + 2/5 = 6/5 = 1 1/5
-3 1/2 + 2 2/3 + 1 5/6 = 7 1/4
-...
-Quiz answers:
-- Value of digit 5 in 795264 => 5 thousands (5,000)
-- Roman numeral for 19 => XIX
-- 2/3 ÷ 1/4 => 8/3
-- Evaluate 9*6 - 4 + 8/2 => 54
-(Full math bank included in the application)
-`;
+/* ======== App state ======== */
+let currentCourse = 'English.101';
+let currentUser = null;
+let currentUserDoc = null;
+let currentRoom = 'group_chat';
+let courseDataCache = {}; // {courseId: {questions: [...]}}
+let bookmarks = {}; // user bookmarks loaded from Firestore
+let darkMode = false;
 
-    // Helper: show a specific course panel
-    function showCourse(courseId){
-      courseTitle.textContent = courseId;
-      coursePanels.forEach(p => p.classList.add('hidden'));
-      placeholderPanel.classList.add('hidden');
-      const el = document.getElementById(courseId + '.content');
-      if (el){
-        el.classList.remove('hidden');
-      } else {
-        placeholderPanel.classList.remove('hidden');
-      }
+/* ======== Utility helpers ======== */
+function el(tag, attrs={}, inner=''){ const e = document.createElement(tag); Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v)); if (inner) e.innerHTML=inner; return e; }
+function fmtTime(ts){ return ts ? new Date(ts).toLocaleString() : ''; }
+
+/* ======== Theme ======== */
+themeBtn.addEventListener('click', ()=> {
+  darkMode = !darkMode;
+  document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+});
+
+/* ======== Authentication ======== */
+// Google sign-in
+googleSignIn.addEventListener('click', async ()=>{
+  try {
+    const result = await signInWithPopup(auth, provider);
+    // user signed in; onAuthStateChanged will handle profile creation
+  } catch (e){ alert('Google sign-in failed: ' + e.message); }
+});
+
+// Email sign-in fallback (simple prompt)
+emailBtn.addEventListener('click', async ()=>{
+  const email = prompt('Email:');
+  const pw = prompt('Password:');
+  if (!email || !pw) return;
+  try {
+    // try sign in
+    await signInWithEmailAndPassword(auth, email, pw);
+  } catch (err){
+    // If sign in failed, create account
+    if (confirm('No account found — create new?')) {
+      const name = prompt('Full name for your account?') || email.split('@')[0];
+      const userCred = await createUserWithEmailAndPassword(auth, email, pw);
+      await setDoc(doc(db,'students',userCred.user.uid), { name, email, course: currentCourse, role: 'student', createdAt: new Date().toISOString() });
+    } else { alert('Sign in canceled'); }
+  }
+});
+
+signOutBtn.addEventListener('click', async ()=> { await signOut(auth); });
+
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+  if (user){
+    signOutBtn.classList.remove('hidden');
+    googleSignIn.classList.add('hidden');
+    emailBtn.classList.add('hidden');
+    // load or create profile doc
+    const uid = user.uid;
+    const docRef = doc(db,'students',uid);
+    const snap = await getDoc(docRef);
+    if (!snap.exists()){
+      // first time: assign moderator if no students exist
+      const studentsSnap = await getDocs(collection(db,'students'));
+      const role = studentsSnap.empty ? 'moderator' : 'student';
+      await setDoc(docRef, { name: user.displayName || user.email.split('@')[0], email: user.email, course: currentCourse, role, createdAt: new Date().toISOString() });
+      currentUserDoc = { name: user.displayName || user.email, email: user.email, role };
+    } else {
+      currentUserDoc = snap.data();
     }
+    // update UI
+    profileNameDisplay.textContent = currentUserDoc.name || user.email;
+    profileEmailDisplay.textContent = currentUserDoc.email || '';
+    userBadge.textContent = (currentUserDoc.name || 'Student').split(' ')[0];
+    if (currentUserDoc.avatar){ avatarPreview.src = currentUserDoc.avatar; avatarPreview.style.display='block'; }
+    // show moderator tools if mod
+    if (currentUserDoc.role === 'moderator'){ moderatorPanel.classList.remove('hidden'); }
+    else { moderatorPanel.classList.add('hidden'); }
+    // auto-join message
+    postSystemMessage(`${currentUserDoc.name || 'A student'} joined S.U.C`);
+    // load bookmarks & progress
+    await loadUserExtras(uid);
+  } else {
+    signOutBtn.classList.add('hidden');
+    googleSignIn.classList.remove('hidden');
+    emailBtn.classList.remove('hidden');
+    profileNameDisplay.textContent = 'Not signed in';
+    profileEmailDisplay.textContent = '';
+    userBadge.textContent = 'Guest';
+    avatarPreview.style.display='none';
+    currentUserDoc = null;
+    bookmarks = {};
+  }
+});
 
-    // Course card clicks
-    courseEls.forEach(c => {
-      c.addEventListener('click', () => {
-        const id = c.getAttribute('data-course');
-        showCourse(id);
-        // switch chat room to course room
-        const roomVal = id === 'English.101' || id === 'Mathematics.101' || id === 'Biology.101' ? 'group_chat/' + id : 'group_chat';
-        chatCourseSelect.value = roomVal;
-        switchChatRoom(roomVal);
-      });
-    });
-
-    // Auth modal state
-    let isSignUp = true;
-    btnAuth.addEventListener('click', ()=>{ authModal.classList.remove('hidden'); authTitle.textContent='Sign Up'; authActionBtn.textContent='Create account'; authFeedback.textContent=''; isSignUp=true; });
-    authToggleBtn.addEventListener('click', ()=>{ isSignUp = !isSignUp; authTitle.textContent = isSignUp ? 'Sign Up' : 'Sign In'; authActionBtn.textContent = isSignUp ? 'Create account' : 'Sign in'; });
-    authCloseBtn.addEventListener('click', ()=>{ authModal.classList.add('hidden'); });
-
-    // Create or Sign In
-    authActionBtn.addEventListener('click', async ()=>{
-      authFeedback.textContent = '';
-      const name = authName.value.trim();
-      const email = authEmail.value.trim();
-      const pw = authPassword.value;
-      const course = authCourse.value;
-      if (!email || !pw) { authFeedback.textContent = 'Email and password required.'; return; }
-      try {
-        if (isSignUp) {
-          const cred = await createUserWithEmailAndPassword(auth, email, pw);
-          const uid = cred.user.uid;
-          // check if any student exists; if none, assign moderator role to first registered user
-          const studentsSnap = await getDocs(collection(firestore,'students'));
-          const role = (studentsSnap.empty) ? 'moderator' : 'student';
-          await setDoc(doc(firestore,'students',uid), { name, email, course, role, createdAt: new Date().toISOString() });
-          authFeedback.textContent = 'Account created. Welcome, ' + (name || email);
-          authModal.classList.add('hidden');
-        } else {
-          await signInWithEmailAndPassword(auth, email, pw);
-          authFeedback.textContent = 'Signed in.';
-          authModal.classList.add('hidden');
+/* ======== Seed initial course data (only run once) ========
+   We'll attempt to seed Math and Biology content into Firestore under collection 'courses'
+   so the app has content prepopulated. If content already exists, we won't overwrite.
+*/
+async function seedInitialCourses(){
+  try {
+    const courseIds = ['English.101','Mathematics.101','Biology.101'];
+    // Check if courses exist
+    for (const id of courseIds){
+      const cdoc = doc(db,'courses',id);
+      const snap = await getDoc(cdoc);
+      if (!snap.exists()){
+        // Prepare default content for each course
+        let content = { id, title: id, questions: [] };
+        if (id === 'English.101'){
+          content.questions = [
+            { q: "What does the Latin root 'nomen' mean?", a:["Word","Name","Title","Idea"], correct:1, topic:"Nouns" },
+            { q: "Which of the following is not a noun?", a:["Honesty","Run","Denmark","Refrigerator"], correct:1, topic:"Nouns" },
+            // condensed set...
+          ];
+        } else if (id === 'Mathematics.101'){
+          content.questions = [
+            { q:"What is 3/4 + 5/12 ?", a:["1 1/6","14/12","1 2/12","9/12"], correct:0, topic:"Fractions" },
+            { q:"2/3 ÷ 1/4 = ?", a:["1/6","8/3","3/8","2/12"], correct:1, topic:"Fractions" },
+            { q:"Value of digit 5 in 795264?", a:["50","500","5,000","50,000"], correct:2, topic:"Place Value" },
+            // more...
+          ];
+        } else if (id === 'Biology.101'){
+          // A richer biology bank (core topics: cells, respiration, genetics, ecology)
+          content.questions = [
+            { q:"Who coined the term 'cell' after viewing cork tissue?", a:["Antonie van Leeuwenhoek","Robert Hooke","Louis Pasteur","Gregor Mendel"], correct:1, topic:"Cells & Microscopy" },
+            { q:"Which organelle is the site of aerobic respiration (ATP production)?", a:["Ribosome","Mitochondrion","Golgi apparatus","Chloroplast"], correct:1, topic:"Cellular Respiration" },
+            { q:"DNA is composed of which repeating units?", a:["Amino acids","Nucleotides","Monosaccharides","Fatty acids"], correct:1, topic:"Genetics" },
+            { q:"Mendel's law of segregation applies to which process?", a:["Meiosis","Mitosis","Fertilization","Transcription"], correct:0, topic:"Genetics" },
+            { q:"Which of the following is a producer in an ecosystem?", a:["Wolf","Oak tree","Decomposer","Rabbit"], correct:1, topic:"Ecology" },
+            { q:"What is osmosis?", a:["Active transport of ions","Diffusion of water across a semipermeable membrane","Protein synthesis","Cell division"], correct:1, topic:"Cell Transport" },
+            { q:"Which blood cells carry oxygen?", a:["White blood cells","Platelets","Red blood cells","Plasma"], correct:2, topic:"Human Biology" },
+            { q:"Which biomolecule acts as enzymes?", a:["Lipids","Carbohydrates","Proteins","Nucleic acids"], correct:2, topic:"Biochemistry" },
+            { q:"Which structure stores genetic information?", a:["Ribosome","Nucleus","Mitochondrion","Vacuole"], correct:1, topic:"Cell Structure" },
+            { q:"Which process produces genetically identical daughter cells?", a:["Meiosis","Mitosis","Fertilization","Binary fission"], correct:1, topic:"Cell Division" },
+            // add more as needed...
+          ];
         }
-      } catch (e){
-        authFeedback.textContent = e.message;
+        await setDoc(cdoc, { ...content, createdAt: new Date().toISOString() });
       }
-    });
-
-    // Sign out
-    btnSignOut.addEventListener('click', async ()=> { await signOut(auth); });
-
-    // Observe auth state
-    let currentUser = null;
-    onAuthStateChanged(auth, async user => {
-      currentUser = user;
-      if (user){
-        btnAuth.classList.add('hidden');
-        btnSignOut.classList.remove('hidden');
-        const uid = user.uid;
-        const pdoc = await getDoc(doc(firestore,'students',uid));
-        const data = pdoc.exists() ? pdoc.data() : {name: user.email, role:'student', course:''};
-        userInfo.innerHTML = `<div style="display:flex;gap:8px;align-items:center"><div><img id="smallAvatar" src="${data.avatar || ''}" alt="" style="${data.avatar? '' : 'display:none'};width:32px;height:32px;border-radius:50%"></div><div><strong>${data.name || user.email}</strong><div class="muted small">${data.course || ''} ${data.role === 'moderator' ? '<span class="moderator-badge">MOD</span>' : ''}</div></div></div>`;
-        profileName.textContent = data.name || user.email;
-        if (data.avatar) { avatarImg.src = data.avatar; avatarImg.classList.remove('hidden'); }
-        profileEditor.classList.remove('hidden');
-        editName.value = data.name || '';
-        editCourse.value = data.course || '';
-        // post join message to public group chat & course-specific chat
-        const joinMsgRef = ref(rdb, 'group_chat/messages');
-        await push(joinMsgRef, { sender: 'System', message: `${data.name || user.email} joined S.U.C`, ts: Date.now(), uid });
-        // Show moderator tools if role is moderator
-        if (data.role === 'moderator') { moderatorTools.style.display = 'block'; }
-        else { moderatorTools.style.display = 'none'; }
-      } else {
-        btnAuth.classList.remove('hidden');
-        btnSignOut.classList.add('hidden');
-        userInfo.textContent = 'Not signed in';
-        profileName.textContent = 'Not signed in';
-        avatarImg.classList.add('hidden');
-        profileEditor.classList.add('hidden');
-        moderatorTools.style.display = 'none';
-      }
-    });
-
-    // Profile editing and avatar upload
-    uploadAvatarBtn.addEventListener('click', async ()=>{
-      if (!currentUser) { alert('Sign in to upload avatar'); return; }
-      const file = avatarFile.files[0];
-      if (!file) { alert('Choose an image first'); return; }
-      const uid = currentUser.uid;
-      const storageRef = sref(storage, `avatars/${uid}/${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(snapshot.ref);
-      // update user doc
-      await updateDoc(doc(firestore,'students',uid), { avatar: url });
-      avatarImg.src = url; avatarImg.classList.remove('hidden');
-      document.getElementById('smallAvatar').src = url;
-      alert('Avatar uploaded');
-    });
-
-    saveProfileBtn.addEventListener('click', async ()=>{
-      if (!currentUser) { alert('Sign in to save profile'); return; }
-      const uid = currentUser.uid;
-      const name = editName.value.trim();
-      const course = editCourse.value;
-      await updateDoc(doc(firestore,'students',uid), { name, course });
-      alert('Profile updated');
-    });
-
-    cancelEditProfile.addEventListener('click', ()=>{ profileEditor.classList.add('hidden'); });
-
-    // Chat logic (Realtime DB)
-    let currentRoom = 'group_chat';
-    let messageListeners = {};
-    function formatMessageHtml(msgData, key){
-      const sender = msgData.sender || 'Unknown';
-      const text = msgData.message || '';
-      const time = msgData.ts ? new Date(msgData.ts).toLocaleString() : '';
-      const uid = msgData.uid || '';
-      const isSystem = sender === 'System';
-      const el = document.createElement('div');
-      el.className = 'msg ' + (isSystem ? 'system' : '');
-      el.setAttribute('data-key', key || '');
-      el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${sender}</strong> <small class="muted">${time}</small></div></div><div style="margin-top:4px">${text}</div>`;
-      // delete button for moderators
-      if (window.currentProfileRole === 'moderator') {
-        const delBtn = document.createElement('button');
-        delBtn.textContent = 'Delete';
-        delBtn.style.cssText = 'float:right;margin-top:6px;background:#e74c3c;color:white;border:none;padding:4px 6px;border-radius:6px;cursor:pointer';
-        delBtn.addEventListener('click', async ()=> {
-          if (!confirm('Delete this message?')) return;
-          // remove node by key
-          const nodeRef = ref(rdb, currentRoom + '/messages/' + key);
-          await remove(nodeRef);
-        });
-        el.appendChild(delBtn);
-      }
-      return el;
     }
+  } catch (e){ console.error('Seeding failed', e); }
+}
 
-    async function switchChatRoom(room){
-      // remove previous listeners (we use onChildAdded which we cannot easily detach by callback; basic approach: clear the chat and set new onChildAdded)
-      chatBox.innerHTML = '';
-      currentRoom = room;
-      const rRef = ref(rdb, room + '/messages');
-      onChildAdded(rRef, (snap) => {
-        const key = snap.key;
-        const val = snap.val();
-        const msgEl = formatMessageHtml(val, key);
-        chatBox.appendChild(msgEl);
-        chatBox.scrollTop = chatBox.scrollHeight;
+// seed on load (fire & forget)
+seedInitialCourses();
+
+/* ======== Course loading & display ======== */
+async function loadCourse(courseId){
+  currentCourse = courseId;
+  courseTitle.textContent = courseId;
+  const cdoc = doc(db,'courses',courseId);
+  const snap = await getDoc(cdoc);
+  let courseObj;
+  if (snap.exists()){
+    courseObj = snap.data();
+    courseDataCache[courseId] = courseObj;
+  } else {
+    // fallback: empty
+    courseObj = { id: courseId, title: courseId, questions: [] };
+    courseDataCache[courseId] = courseObj;
+  }
+  // set meta
+  qCount.textContent = (courseObj.questions || []).length;
+  courseSub.textContent = (courseObj.description || courseId + " — course materials");
+  displayQuestions(courseObj.questions || []);
+}
+
+/* render Q list */
+function displayQuestions(questions){
+  contentList.innerHTML = '';
+  if (!questions.length){
+    contentList.innerHTML = '<div class="small">No questions yet for this course.</div>';
+    return;
+  }
+  questions.forEach((qq, idx) => {
+    const wrap = el('div',{class:'question'});
+    const meta = el('div',{class:'qa-meta'}, `<div>#${idx+1} — <strong>${qq.topic || 'General'}</strong></div>`);
+    const qtext = el('div',{}, `<strong>${qq.q}</strong>`);
+    const opts = el('div',{}, '');
+    (qq.a || []).forEach((opt, i) => {
+      const btn = el('button',{class:'btn ghost', style:'margin:6px 6px 0 0'}, opt);
+      btn.addEventListener('click', ()=> {
+        const correct = (i === qq.correct);
+        if (correct) { btn.style.background = 'var(--success)'; btn.style.color = 'white'; userAnsweredCorrectly(currentUser?.uid, currentCourse, idx); }
+        else { btn.style.background = '#ef4444'; btn.style.color = 'white'; userAnsweredIncorrect(currentUser?.uid, currentCourse, idx); }
+        // reveal explanation if present
+        if (qq.explanation) {
+          const expl = el('div', {class:'small'}, `<em>${qq.explanation}</em>`);
+          wrap.appendChild(expl);
+        }
       });
+      opts.appendChild(btn);
+    });
+    // bookmark button
+    const bm = el('button',{class:'bookmark'}, '🔖');
+    bm.title = 'Bookmark question';
+    bm.addEventListener('click', ()=> toggleBookmark(currentCourse, idx, qq));
+    wrap.appendChild(meta);
+    wrap.appendChild(qtext);
+    wrap.appendChild(opts);
+    wrap.appendChild(bm);
+    contentList.appendChild(wrap);
+  });
+}
+
+/* ======== Bookmarks & progress ======== */
+async function loadUserExtras(uid){
+  if (!uid) return;
+  const snap = await getDoc(doc(db,'userExtras',uid));
+  if (snap.exists()){
+    const data = snap.data();
+    bookmarks = data.bookmarks || {};
+    document.getElementById('quizCount').textContent = data.quizzesTaken || 0;
+    document.getElementById('progress').textContent = (data.progress || 0) + '%';
+  } else {
+    bookmarks = {};
+  }
+}
+async function toggleBookmark(courseId, qIdx, questionObj){
+  if (!currentUser) { alert('Sign in to bookmark'); return; }
+  const uid = currentUser.uid;
+  const key = `${courseId}::${qIdx}`;
+  const docRef = doc(db,'userExtras',uid);
+  const snap = await getDoc(docRef);
+  let data = snap.exists() ? snap.data() : {};
+  data.bookmarks = data.bookmarks || {};
+  if (data.bookmarks[key]) {
+    delete data.bookmarks[key];
+    alert('Removed bookmark');
+  } else {
+    data.bookmarks[key] = questionObj;
+    alert('Bookmarked');
+  }
+  await setDoc(docRef, { ...data }, { merge: true });
+  await loadUserExtras(uid);
+}
+async function viewBookmarksUI(){
+  if (!currentUser) { alert('Sign in to view bookmarks'); return; }
+  const uid = currentUser.uid;
+  const snap = await getDoc(doc(db,'userExtras',uid));
+  const data = snap.exists() ? snap.data() : {};
+  const bm = data.bookmarks || {};
+  const keys = Object.keys(bm);
+  if (!keys.length) { alert('No bookmarks'); return; }
+  let html = '<h3>Your bookmarks</h3>';
+  keys.forEach(k=> {
+    html += `<div style="padding:8px;border-bottom:1px solid #eee"><strong>${k.split('::')[0]}</strong> — ${bm[k].q}</div>`;
+  });
+  quizArea.innerHTML = html;
+  quizArea.classList.remove('hidden');
+}
+
+/* ======== Quiz mode ======== */
+quizBtn.addEventListener('click', ()=> startQuizForCourse(currentCourse));
+async function startQuizForCourse(courseId){
+  const course = courseDataCache[courseId] || (await loadCourse(courseId) && courseDataCache[courseId]);
+  const qs = (courseDataCache[courseId] && courseDataCache[courseId].questions) || [];
+  if (!qs.length) { alert('No questions for this course'); return; }
+  // simple quiz: 5 random
+  const picks = [];
+  const copy = qs.slice();
+  while (picks.length < Math.min(5, copy.length)){
+    const idx = Math.floor(Math.random()*copy.length);
+    picks.push({ ...copy.splice(idx,1)[0] });
+  }
+  renderQuiz(picks, courseId);
+}
+function renderQuiz(questions, courseId){
+  quizArea.innerHTML = '';
+  quizArea.classList.remove('hidden');
+  const container = el('div',{}, '');
+  let score = 0;
+  questions.forEach((qq, i) => {
+    const qdiv = el('div',{class:'question'});
+    qdiv.innerHTML = `<div class="small">Q${i+1} — ${qq.topic || 'General'}</div><div style="font-weight:600">${qq.q}</div>`;
+    (qq.a || []).forEach((opt, j) => {
+      const b = el('button',{class:'btn ghost', style:'margin-right:6px'}, opt);
+      b.addEventListener('click', ()=> {
+        if (j === qq.correct) { score++; b.style.background='var(--success)'; b.style.color='white'; } else { b.style.background='#ef4444'; b.style.color='white'; }
+        // disable siblings
+        Array.from(qdiv.querySelectorAll('button')).forEach(btn => btn.disabled = true);
+      });
+      qdiv.appendChild(b);
+    });
+    container.appendChild(qdiv);
+  });
+  const finishBtn = el('button',{class:'btn'}, 'Finish Quiz');
+  finishBtn.addEventListener('click', async ()=> {
+    quizArea.innerHTML = `<div class="quiz-result"><strong>Your score: ${score}/${questions.length}</strong></div>`;
+    // save to userExtras
+    if (currentUser){
+      const refDoc = doc(db,'userExtras',currentUser.uid);
+      const snap = await getDoc(refDoc);
+      const data = snap.exists() ? snap.data() : {};
+      data.quizzesTaken = (data.quizzesTaken || 0) + 1;
+      // basic progress calculation
+      data.progress = Math.min(100, (data.progress || 0) + Math.round((score/questions.length)*10));
+      await setDoc(refDoc, data, { merge: true });
+      document.getElementById('quizCount').textContent = data.quizzesTaken;
+      document.getElementById('progress').textContent = (data.progress || 0) + '%';
+      alert('Quiz saved to your profile');
+    } else {
+      alert('Sign in to save quiz results');
     }
+  });
+  container.appendChild(finishBtn);
+  quizArea.appendChild(container);
+}
 
-    // default
-    switchChatRoom('group_chat');
+/* ======== Chat (Realtime DB) ======== */
+function postSystemMessage(text){
+  const msgRef = ref(rdb, 'group_chat/messages');
+  push(msgRef, { sender: 'System', message: text, ts: Date.now() });
+}
 
-    // send message
-    sendChatBtn.addEventListener('click', async ()=>{
-      const text = chatInput.value.trim();
-      if (!text) return;
-      let sender = 'Guest';
-      let uid = null;
-      if (currentUser){
-        const ud = await getDoc(doc(firestore,'students',currentUser.uid));
-        const data = ud.exists() ? ud.data() : null;
-        sender = data?.name || currentUser.email;
-        uid = currentUser.uid;
-      }
-      const msgRef = ref(rdb, chatCourseSelect.value + '/messages');
-      await push(msgRef, { sender, message: text, ts: Date.now(), uid });
-      chatInput.value = '';
-    });
-
-    // room select change
-    chatCourseSelect.addEventListener('change', ()=>{ switchChatRoom(chatCourseSelect.value); });
-
-    // clear local view
-    document.getElementById('clearChatLocal').addEventListener('click', ()=>{ chatBox.innerHTML=''; });
-
-    // Purge room (moderator)
-    purgeRoomBtn.addEventListener('click', async ()=>{
-      if (!currentUser) { alert('Sign in as moderator to purge'); return; }
-      // check role
-      const pdoc = await getDoc(doc(firestore,'students',currentUser.uid));
-      const role = pdoc.exists() ? pdoc.data().role : '';
-      if (role !== 'moderator'){ alert('Only moderators can purge rooms'); return; }
-      if (!confirm('Delete all messages in this room?')) return;
-      // remove entire messages node
-      const roomRef = ref(rdb, chatCourseSelect.value + '/messages');
-      await remove(roomRef);
-      alert('Room purged');
-    });
-
-    // request mod (sends a system message — manual promotion via Firestore console)
-    requestModBtn.addEventListener('click', async ()=>{
-      if (!currentUser) { modMsg.textContent = 'Sign in to request moderator.'; return; }
-      const pdoc = await getDoc(doc(firestore,'students',currentUser.uid));
-      const name = pdoc.exists() ? pdoc.data().name : currentUser.email;
-      const msgRef = ref(rdb, 'group_chat/messages');
-      await push(msgRef, { sender: 'System', message: `${name} has requested moderator privileges. Grant via Firestore console if appropriate.`, ts: Date.now(), uid: currentUser.uid });
-      modMsg.textContent = 'Request sent (moderators will review via Firebase Console).';
-    });
-
-    // Import Biology DOCX using Mammoth (client-side)
-    importBioBtn.addEventListener('click', async ()=>{
-      const file = bioFileInput.files[0];
-      if (!file) { alert('Choose a .docx file first'); return; }
-      try {
-        const arrayBuffer = await file.arrayBuffer();
-        const result = await mammoth.convertToHtml({ arrayBuffer });
-        const html = result.value;
-        // display in editor
-        bioEditor.innerHTML = html;
-        // save to Firestore under a course doc
-        const courseDoc = doc(firestore,'courses','Biology.101');
-        await setDoc(courseDoc, { content: html, updatedAt: new Date().toISOString(), sourceFile: file.name });
-        alert('Biology document imported and saved to Biology.101');
-        // show saved
-        loadSavedBiology();
-      } catch (e){
-        alert('Import failed: ' + e.message);
-      }
-    });
-
-    // Save BIO from editor to Firestore
-    saveBioBtn.addEventListener('click', async ()=>{
-      const html = bioEditor.innerHTML.trim();
-      if (!html) { alert('Editor is empty'); return; }
-      await setDoc(doc(firestore,'courses','Biology.101'), { content: html, updatedAt: new Date().toISOString(), sourceFile: 'pasted' });
-      alert('Biology content saved.');
-      loadSavedBiology();
-    });
-
-    // Load saved biology content
-    async function loadSavedBiology(){
-      const docRef = doc(firestore,'courses','Biology.101');
-      const snap = await getDoc(docRef);
-      if (snap.exists()){
-        const data = snap.data();
-        bioSaved.innerHTML = data.content || '<div class="muted">No content</div>';
-        // also show inside Biology content panel when opened
-        document.getElementById('Biology.101.content').querySelector('#bioSaved').innerHTML = data.content || '<div class="muted">No content</div>';
-      } else {
-        bioSaved.innerHTML = '<div class="muted">No saved Biology content yet.</div>';
-      }
+function listenToRoom(roomKey){
+  // clear previous
+  chatBox.innerHTML = '';
+  currentRoom = roomKey;
+  const rref = ref(rdb, roomKey + '/messages');
+  onChildAdded(rref, (snap) => {
+    const v = snap.val();
+    const key = snap.key;
+    const elmsg = el('div',{class:'msg ' + ((currentUser && v.uid === currentUser.uid) ? 'me' : 'other')});
+    elmsg.innerHTML = `<div style="font-size:13px;color:var(--muted)"><strong>${v.sender}</strong> <span style="margin-left:8px">${fmtTime(v.ts)}</span></div><div style="margin-top:6px">${v.message}</div>`;
+    if (currentUser && currentUserDoc?.role === 'moderator'){
+      const del = el('button', {class:'btn ghost', style:'margin-top:6px;background:#ef4444;color:white'}, 'Delete');
+      del.addEventListener('click', async ()=> {
+        if (!confirm('Delete message?')) return;
+        await remove(ref(rdb, roomKey + '/messages/' + key));
+      });
+      elmsg.appendChild(del);
     }
+    chatBox.appendChild(elmsg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
+}
+chatRoomSelect.addEventListener('change', ()=> { listenToRoom(chatRoomSelect.value); });
+sendChat.addEventListener('click', async ()=>{
+  const text = chatInput.value.trim(); if (!text) return;
+  const sender = currentUserDoc?.name || (currentUser?.email || 'Guest');
+  const uid = currentUser?.uid || null;
+  await push(ref(rdb, chatRoomSelect.value + '/messages'), { sender, message: text, ts: Date.now(), uid });
+  chatInput.value = '';
+});
 
-    loadBioBtn.addEventListener('click', loadSavedBiology);
+/* ======== Avatar upload (Firebase Storage) ======== */
+uploadAvatar.addEventListener('click', async ()=>{
+  if (!currentUser){ alert('Sign in to upload'); return; }
+  const file = avatarFileInput.files[0];
+  if (!file) { alert('Choose an image'); return; }
+  const path = `avatars/${currentUser.uid}/${Date.now()}_${file.name}`;
+  const srefObj = sref(storage, path);
+  const snap = await uploadBytes(srefObj, file);
+  const url = await getDownloadURL(snap.ref);
+  // save to student doc
+  await updateDoc(doc(db,'students',currentUser.uid), { avatar: url });
+  avatarPreview.src = url; avatarPreview.style.display='block';
+  alert('Avatar uploaded');
+});
 
-    // initial load of saved biology
-    loadSavedBiology();
+/* ======== Course selection UI ======== */
+courseEls.forEach(elm => {
+  elm.addEventListener('click', async ()=> {
+    courseEls.forEach(c => c.classList.remove('active'));
+    elm.classList.add('active');
+    const id = elm.getAttribute('data-course');
+    await loadCourse(id);
+    // auto switch chat room to course room
+    const room = 'group_chat/' + id;
+    chatRoomSelect.value = room;
+    listenToRoom(room);
+  });
+});
 
-    // Load English & Math full content into panels (placeholder content already set above)
+/* ======== Search across courses ======== */
+searchBtn.addEventListener('click', async ()=>{
+  const q = globalSearch.value.trim().toLowerCase();
+  if (!q) return;
+  // naive search: load all courses and search questions
+  const courseSnap = await getDocs(collection(db,'courses'));
+  const results = [];
+  courseSnap.forEach(docSnap => {
+    const data = docSnap.data();
+    (data.questions || []).forEach((qq, idx) => {
+      if ((qq.q || '').toLowerCase().includes(q) || (qq.topic||'').toLowerCase().includes(q) ) results.push({ course: data.id, q: qq.q, topic: qq.topic, index: idx });
+    });
+  });
+  // show basic results
+  contentList.innerHTML = `<div><strong>Search results for "${q}"</strong> — ${results.length} found</div>`;
+  results.forEach(r => {
+    const item = el('div',{class:'question'}, `<div><strong>${r.course}</strong> — <em>${r.topic}</em></div><div>${r.q}</div>`);
+    contentList.appendChild(item);
+  });
+});
 
-    // Ensure the default room is loaded
-    chatCourseSelect.value = 'group_chat';
-    switchChatRoom('group_chat');
+/* ======== Export courses JSON ======== */
+exportCoursesBtn.addEventListener('click', async ()=>{
+  const snaps = await getDocs(collection(db,'courses'));
+  const out = {};
+  snaps.forEach(s => out[s.id] = s.data());
+  const blob = new Blob([JSON.stringify(out,null,2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'suc_courses_export.json'; a.click();
+});
 
-    // small UX: press Enter to send chat
-    chatInput.addEventListener('keydown', (e)=>{ if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendChatBtn.click(); } });
+/* ======== Import DOCX (client-side) ======== */
+importDocxBtn.addEventListener('click', async () => {
+  const f = docxInput.files[0];
+  if (!f) { alert('Choose a .docx file to import'); return; }
+  try {
+    const ab = await f.arrayBuffer();
+    const result = await mammoth.convertToHtml({ arrayBuffer: ab });
+    const html = result.value;
+    // Save as Biology.101 content
+    await setDoc(doc(db,'courses','Biology.101'), { id:'Biology.101', title:'Biology.101', questions:[], contentHtml: html, updatedAt: new Date().toISOString() });
+    alert('Imported DOCX into Biology.101 content (HTML saved). Reload course to view.');
+  } catch (e){ alert('Import failed: ' + e.message); }
+});
 
-    // Expose a global for debugging/moderation (optional)
-    window._suc = { auth, firestore, rdb, storage };
+/* ======== Moderator functions ======== */
+purgeRoom.addEventListener('click', async ()=> {
+  if (!currentUser || currentUserDoc?.role !== 'moderator') { alert('Moderator access only'); return; }
+  const room = chatRoomSelect.value;
+  if (!confirm('Purge all messages in ' + room + '?')) return;
+  await remove(ref(rdb, room + '/messages'));
+  alert('Purged ' + room);
+});
 
-  </script>
+/* ======== Initial load: load English by default and public chat ======== */
+await loadCourse('English.101');
+listenToRoom('group_chat'); // public
+
+/* ======== Helpers for answering tracking (save progress) ======== */
+async function userAnsweredCorrectly(uid, courseId, qIdx){
+  if (!currentUser) return;
+  const docRef = doc(db,'userExtras',currentUser.uid);
+  const snap = await getDoc(docRef);
+  const data = snap.exists() ? snap.data() : {};
+  data.correct = (data.correct || 0) + 1;
+  data.progress = Math.min(100, (data.progress || 0) + 2);
+  await setDoc(docRef, data, { merge: true });
+  document.getElementById('progress').textContent = (data.progress || 0) + '%';
+}
+async function userAnsweredIncorrect(uid, courseId, qIdx){
+  if (!currentUser) return;
+  const docRef = doc(db,'userExtras',currentUser.uid);
+  const snap = await getDoc(docRef);
+  const data = snap.exists() ? snap.data() : {};
+  data.incorrect = (data.incorrect || 0) + 1;
+  data.progress = Math.max(0, (data.progress || 0) - 1);
+  await setDoc(docRef, data, { merge: true });
+  document.getElementById('progress').textContent = (data.progress || 0) + '%';
+}
+
+/* ======== Export for debugging (window) ======== */
+window.SUC = { auth, db, rdb, storage };
+
+</script>
 </body>
 </html>
