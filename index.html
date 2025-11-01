@@ -6,55 +6,56 @@
   <title>Smythe University College (SUC) — Academic Hub</title>
   <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet">
   <style>
-:root{--bg:#f1f5f9;--card:#fff;--accent:#1e40af;--muted:#5b6b77;--gold:#d97706;--success:#22c55e;--danger:#c0392b;--dark-bg:#0b1220;--dark-card:#171a25;--dark-accent:#60a5fa;}
-body{font-family:'Inter',system-ui,Arial;margin:0;background:var(--bg);color:#071022;transition:background 0.3s,color 0.3s;}
-body.darkmode{background:var(--dark-bg);color:#e5e7eb;}
-.wrap{max-width:1200px;margin:20px auto;padding:16px}
-header{display:flex;align-items:center;gap:12px}
-.logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);color:white;display:grid;place-items:center;font-weight:800;font-size:2em;}
-nav{margin-left:auto;display:flex;gap:8px;align-items:center;}
-.btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700;transition:background .2s;}
-.btn[disabled]{opacity:0.6;cursor:not-allowed;}
-.btn.danger{background:var(--danger);}
-.btn.success{background:var(--success);}
-.btn.gold{background:var(--gold);}
-.btn.dark{background:#222;}
-.card{background:var(--card);padding:18px;border-radius:14px;box-shadow:0 6px 18px rgba(2,6,23,0.06);margin-top:12px;transition:background 0.3s,color 0.3s;}
-body.darkmode .card{background:var(--dark-card);color:#e5e7eb;}
-.courses{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
-.course{padding:13px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);cursor:pointer;font-size:1.2em;background:#f8fafc;transition:background .2s;}
-.course.active{background:var(--accent);color:#fff;}
-body.darkmode .course{background:#222;color:#e5e7eb;border-color:#374151;}
-.section{margin-top:16px;}
-.qa{margin:8px 0;border-bottom:1px solid #eee;}
-.qa:last-child{border:none;}
-.qa .qheader{font-weight:700;cursor:pointer;padding:5px;border-radius:7px;}
-.qa .qheader:hover{background:#f3f4f6;}
-body.darkmode .qa .qheader:hover{background:#222;}
-.qa .qmeta{font-size:.98em;color:var(--muted);}
-.qa .qanswer{padding:8px 0 0 16px;}
-.fav{color:var(--gold);cursor:pointer;font-size:1.3em;}
-.fav.on{color:#eab308;}
-.chat{height:270px;overflow:auto;border:1px solid rgba(0,0,0,0.08);padding:8px;border-radius:8px;background:#fff;margin-bottom:8px;}
-body.darkmode .chat{background:#1c2231;border-color:#374151;}
-.side{margin-top:12px;}
-.form-row{display:flex;gap:8px;align-items:center;}
-input,select,textarea{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);font-size:1em;background:#f9fafb;color:#111;}
-body.darkmode input,body.darkmode select,body.darkmode textarea{background:#171a25;color:#e5e7eb;border-color:#374151;}
-pre{white-space:pre-wrap;background:#f8fafc;padding:10px;border-radius:8px;}
-body.darkmode pre{background:#171a25;color:#e5e7eb;}
-.muted{color:var(--muted);}
-#userList{margin-top:10px;font-size:0.97em;}
-.searchRow{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
-#searchInput{flex:1;}
-#progressBar{width:100%;height:12px;border-radius:6px;background:#f1f5f9;margin:6px 0 14px 0;overflow:hidden;}
-#progressFill{height:12px;background:var(--accent);width:0%;transition:width .5s;}
-body.darkmode #progressBar{background:#222;}
-body.darkmode #progressFill{background:#60a5fa;}
-#quizModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);align-items:center;justify-content:center;z-index:9999;}
-#quizModal .inner{background:white;padding:22px;border-radius:16px;max-width:390px;width:99%;}
-body.darkmode #quizModal .inner{background:#171a25;color:#e5e7eb;}
-@media (max-width:650px){.wrap{padding:5px;}.card{padding:10px;}header h1{font-size:1.1em;}}
+    /* [Very long CSS as in previous completions, including dark mode, cards, chat, etc.] */
+    :root{--bg:#f1f5f9;--card:#fff;--accent:#1e40af;--muted:#5b6b77;--gold:#d97706;--success:#22c55e;--danger:#c0392b;--dark-bg:#0b1220;--dark-card:#171a25;--dark-accent:#60a5fa;}
+    body{font-family:'Inter',system-ui,Arial;margin:0;background:var(--bg);color:#071022;transition:background 0.3s,color 0.3s;}
+    body.darkmode{background:var(--dark-bg);color:#e5e7eb;}
+    .wrap{max-width:1200px;margin:20px auto;padding:16px}
+    header{display:flex;align-items:center;gap:12px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);color:white;display:grid;place-items:center;font-weight:800;font-size:2em;}
+    nav{margin-left:auto;display:flex;gap:8px;align-items:center;}
+    .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700;transition:background .2s;}
+    .btn[disabled]{opacity:0.6;cursor:not-allowed;}
+    .btn.danger{background:var(--danger);}
+    .btn.success{background:var(--success);}
+    .btn.gold{background:var(--gold);}
+    .btn.dark{background:#222;}
+    .card{background:var(--card);padding:18px;border-radius:14px;box-shadow:0 6px 18px rgba(2,6,23,0.06);margin-top:12px;transition:background 0.3s,color 0.3s;}
+    body.darkmode .card{background:var(--dark-card);color:#e5e7eb;}
+    .courses{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+    .course{padding:13px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);cursor:pointer;font-size:1.2em;background:#f8fafc;transition:background .2s;}
+    .course.active{background:var(--accent);color:#fff;}
+    body.darkmode .course{background:#222;color:#e5e7eb;border-color:#374151;}
+    .section{margin-top:16px;}
+    .qa{margin:8px 0;border-bottom:1px solid #eee;}
+    .qa:last-child{border:none;}
+    .qa .qheader{font-weight:700;cursor:pointer;padding:5px;border-radius:7px;}
+    .qa .qheader:hover{background:#f3f4f6;}
+    body.darkmode .qa .qheader:hover{background:#222;}
+    .qa .qmeta{font-size:.98em;color:var(--muted);}
+    .qa .qanswer{padding:8px 0 0 16px;}
+    .fav{color:var(--gold);cursor:pointer;font-size:1.3em;}
+    .fav.on{color:#eab308;}
+    .chat{height:270px;overflow:auto;border:1px solid rgba(0,0,0,0.08);padding:8px;border-radius:8px;background:#fff;margin-bottom:8px;}
+    body.darkmode .chat{background:#1c2231;border-color:#374151;}
+    .side{margin-top:12px;}
+    .form-row{display:flex;gap:8px;align-items:center;}
+    input,select,textarea{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);font-size:1em;background:#f9fafb;color:#111;}
+    body.darkmode input,body.darkmode select,body.darkmode textarea{background:#171a25;color:#e5e7eb;border-color:#374151;}
+    pre{white-space:pre-wrap;background:#f8fafc;padding:10px;border-radius:8px;}
+    body.darkmode pre{background:#171a25;color:#e5e7eb;}
+    .muted{color:var(--muted);}
+    #userList{margin-top:10px;font-size:0.97em;}
+    .searchRow{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+    #searchInput{flex:1;}
+    #progressBar{width:100%;height:12px;border-radius:6px;background:#f1f5f9;margin:6px 0 14px 0;overflow:hidden;}
+    #progressFill{height:12px;background:var(--accent);width:0%;transition:width .5s;}
+    body.darkmode #progressBar{background:#222;}
+    body.darkmode #progressFill{background:#60a5fa;}
+    #quizModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);align-items:center;justify-content:center;z-index:9999;}
+    #quizModal .inner{background:white;padding:22px;border-radius:16px;max-width:390px;width:99%;}
+    body.darkmode #quizModal .inner{background:#171a25;color:#e5e7eb;}
+    @media (max-width:650px){.wrap{padding:5px;}.card{padding:10px;}header h1{font-size:1.1em;}}
   </style>
 </head>
 <body>
@@ -94,30 +95,24 @@ body.darkmode #quizModal .inner{background:#171a25;color:#e5e7eb;}
       <button class="btn success" id="quizBtn">🎲 Random Quiz</button>
     </div>
     <div id="content" class="section" style="display:none;">
-      <!-- English -->
       <div id="English.101" class="card course-content">
         <h3>English.101 — Full Q&A</h3>
         <div class="accordion" id="englishAccordion"></div>
       </div>
-      <!-- Math -->
       <div id="Mathematics.101" class="card course-content" style="display:none;">
         <h3>Mathematics.101 — Full Q&A</h3>
         <div class="accordion" id="mathAccordion"></div>
       </div>
-      <!-- Biology -->
       <div id="Biology.101" class="card course-content" style="display:none;">
         <h3>Biology.101 — Full Q&A</h3>
         <div class="accordion" id="biologyAccordion"></div>
       </div>
-      <!-- Chemistry -->
       <div id="Chemistry.101" class="card course-content" style="display:none;">
         <h3>Chemistry.101 — Coming soon!</h3>
       </div>
-      <!-- PE -->
       <div id="PE.101" class="card course-content" style="display:none;">
         <h3>PE.101 — Coming soon!</h3>
       </div>
-      <!-- COSC -->
       <div id="COSC.101" class="card course-content" style="display:none;">
         <h3>COSC.101 — Coming soon!</h3>
       </div>
@@ -171,18 +166,19 @@ const firebaseConfig = {
   messagingSenderId: "113569186739",
   appId: "1:113569186739:web:d8daf21059f43a79e841c6"
 };
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const rdb = getDatabase(app);
-// ... [The rest of the JS UI logic and rendering as in previous completions]
+// Continue with UI logic (auth, chat, favorites, progress, course switches, search/filter, quiz, dark mode)
 // --- DATA SECTION ---
-// Paste ALL your Q&A for each subject below!
-const englishQA = [/* ...all English 101 Q&A objects here... */];
-const mathQA = [/* ...all Math 101 Q&A objects here... */];
-const biologyQA = [/* ...all Biology 101 Q&A objects here... */];
-// Add more subjects: const chemistryQA = []; const peQA = []; const coscQA = [];
+// Paste ALL your Q&A objects for every subject below!
+const englishQA = [/* ...all English 101 Q&A objects... */];
+const mathQA = [/* ...all Math 101 Q&A objects... */];
+const biologyQA = [/* ...all Biology 101 Q&A objects... */];
+// For Chemistry, PE, COSC, add their arrays once you have their Q&A.
+
+// [Rendering function and UI logic here — same as previous completions. Render Q&A, handle search/filter, course switches, quiz, progress, etc.]
 function renderAccordion(el, data, course){
   el.innerHTML = '';
   data.forEach((q,i)=>{
@@ -207,11 +203,11 @@ function formatTable(tbl){
   tbl.forEach(row=>{ html+='<tr>'+keys.map(k=>'<td style="border:1px solid #eee;padding:3px;">'+row[k]+'</td>').join('')+'</tr>'; });
   html+='</table>'; return html;
 }
-// ... [Rest of the UI logic from previous completions, including auth, chat, progress, course switches, search/filter, quiz, dark mode, etc.]
+// ... [Rest of the UI logic for auth, chat, progress bar, course navigation, etc. — see previous completions for details]
 renderAccordion(document.getElementById('englishAccordion'),englishQA,"English.101");
 renderAccordion(document.getElementById('mathAccordion'),mathQA,"Mathematics.101");
 renderAccordion(document.getElementById('biologyAccordion'),biologyQA,"Biology.101");
-// ... call renderAccordion for other subject arrays when you add their data!
+// ... call renderAccordion for other subject arrays when you add their Q&A!
 </script>
 </body>
 </html>
