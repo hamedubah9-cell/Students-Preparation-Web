@@ -1,0 +1,302 @@
+{
+  "English101": {
+    "sections": [
+      {
+        "title": "Definition and Function of Nouns",
+        "questions": [
+          {
+            "type": "multiple_choice",
+            "question": "What does the Latin root nomen mean?",
+            "options": ["Word", "Name", "Title", "Idea"],
+            "answer": "Name"
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Which of the following is not a noun?",
+            "options": ["Honesty", "Run", "Denmark", "Refrigerator"],
+            "answer": "Run"
+          },
+          {
+            "type": "short_answer",
+            "question": "Explain why nouns are essential in everyday communication using the hamburger example.",
+            "answer": "Nouns identify people, places, things, or ideas. For example, in a hamburger, 'bun', 'patty', 'lettuce', and 'cheese' are nouns that describe its components."
+          },
+          {
+            "type": "short_answer",
+            "question": "Define a noun and give two examples from each category: people, places, things, and ideas.",
+            "answer": "A noun is a word that names a person, place, thing, or idea. People: teacher, doctor; Places: school, Paris; Things: book, computer; Ideas: freedom, happiness."
+          }
+        ]
+      },
+      {
+        "title": "Types of Nouns",
+        "questions": [
+          {
+            "type": "fill_in_blank",
+            "question": "Common nouns begin with ______ letters unless they start a sentence.",
+            "answer": "lowercase"
+          },
+          {
+            "type": "fill_in_blank",
+            "question": "Proper nouns always begin with ______ letters.",
+            "answer": "uppercase"
+          },
+          {
+            "type": "matching",
+            "question": "Match the noun to its type:",
+            "pairs": {
+              "Scarlet O’Hara": "Proper",
+              "Refrigerator": "Concrete",
+              "Honesty": "Abstract",
+              "Denmark": "Proper"
+            }
+          },
+          {
+            "type": "true_false",
+            "question": "All nouns are either concrete or abstract, and either common or proper.",
+            "answer": true
+          },
+          {
+            "type": "true_false",
+            "question": "The noun 'Toyota' is both proper and abstract.",
+            "answer": false
+          }
+        ]
+      },
+      {
+        "title": "Recognizing Nouns",
+        "questions": [
+          {
+            "type": "multiple_choice",
+            "question": "Which of the following is a good test for identifying a noun?",
+            "options": ["Can it be capitalized?", "Can it be made plural or possessive?", "Can it be used in a question?", "Can it be used with a verb?"],
+            "answer": "Can it be made plural or possessive?"
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Which of the following is a noncount noun?",
+            "options": ["Gold", "Cat", "Bus", "Shoe"],
+            "answer": "Gold"
+          }
+        ]
+      },
+      {
+        "title": "Properties of Nouns",
+        "questions": [
+          {
+            "type": "short_answer",
+            "question": "List and briefly explain the four properties of nouns.",
+            "answer": "1) Number – singular or plural; 2) Gender – masculine, feminine, neuter, common; 3) Case – shows function in sentence (subject, object, possessive); 4) Person – first, second, third."
+          },
+          {
+            "type": "short_answer",
+            "question": "What is the difference between grammatical gender and natural gender in English?",
+            "answer": "Grammatical gender follows language rules; natural gender refers to biological or social gender (man/woman)."
+          },
+          {
+            "type": "multiple_choice",
+            "question": "In English, the noun 'teacher' is:",
+            "options": ["Masculine", "Feminine", "Neuter", "Gender-neutral"],
+            "answer": "Gender-neutral"
+          }
+        ]
+      },
+      {
+        "title": "Gender in Nouns",
+        "questions": [
+          {
+            "type": "fill_in_blank",
+            "question": "The feminine form of 'duke' is ______.",
+            "answer": "duchess"
+          },
+          {
+            "type": "fill_in_blank",
+            "question": "The masculine form of 'waitress' is ______.",
+            "answer": "waiter"
+          },
+          {
+            "type": "true_false",
+            "question": "Gender distinctions in nouns are becoming less common in modern English.",
+            "answer": true
+          },
+          {
+            "type": "true_false",
+            "question": "The word 'flight attendant' is gender-specific.",
+            "answer": false
+          }
+        ]
+      },
+      {
+        "title": "Pluralization Rules",
+        "questions": [
+          {
+            "type": "multiple_choice",
+            "question": "What is the correct plural of 'baby'?",
+            "options": ["Babys", "Babies", "Babyes", "Babie’s"],
+            "answer": "Babies"
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Which word correctly follows the rule: add -es to nouns ending in a hissing sound?",
+            "options": ["Cat", "Match", "Book", "Girl"],
+            "answer": "Match"
+          },
+          {
+            "type": "short_answer",
+            "question": "Explain the difference in pluralization between 'potato' and 'piano.'",
+            "answer": "'Potato' → 'potatoes' (add -es); 'Piano' → 'pianos' (just add -s)"
+          }
+        ]
+      },
+      {
+        "title": "Irregular and Invariable Nouns",
+        "questions": [
+          {
+            "type": "fill_in_blank",
+            "question": "The plural of 'alumna' is ______.",
+            "answer": "alumnae"
+          },
+          {
+            "type": "fill_in_blank",
+            "question": "The plural of 'alumnus' is ______.",
+            "answer": "alumni"
+          },
+          {
+            "type": "true_false",
+            "question": "The word 'deer' changes form when pluralized.",
+            "answer": false
+          },
+          {
+            "type": "true_false",
+            "question": "'Species' is an example of an invariable noun.",
+            "answer": true
+          }
+        ]
+      },
+      {
+        "title": "Collective Nouns",
+        "questions": [
+          {
+            "type": "multiple_choice",
+            "question": "Which of the following is a collective noun?",
+            "options": ["Bookshelf", "Commonality", "Book", "Person"],
+            "answer": "Commonality"
+          },
+          {
+            "type": "short_answer",
+            "question": "What does the word 'commonality' mean in the context of collective nouns?",
+            "answer": "It refers to a group or collection of individuals treated as a whole."
+          }
+        ]
+      },
+      {
+        "title": "British vs. American English",
+        "questions": [
+          {
+            "type": "matching",
+            "question": "Match the American term to its British equivalent:",
+            "pairs": {
+              "Elevator": "Lift",
+              "Cookie": "Biscuit",
+              "Truck": "Lorry",
+              "Diaper": "Nappy"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Compound Words",
+        "questions": [
+          {
+            "type": "multiple_choice",
+            "question": "Which of the following is a compound word?",
+            "options": ["basket", "ball", "basketball", "bask"],
+            "answer": "basketball"
+          },
+          {
+            "type": "short_answer",
+            "question": "Give two examples of compound words and explain how each makes sense.",
+            "answer": "Toothpaste = tooth + paste (used for teeth); Bedroom = bed + room (a room with a bed)."
+          }
+        ]
+      },
+      {
+        "title": "Pluralization of Numerals, Letters, and Abbreviations",
+        "questions": [
+          {
+            "type": "short_answer",
+            "question": "What is the correct plural form of the numeral 1980?",
+            "answer": "1980s"
+          },
+          {
+            "type": "short_answer",
+            "question": "How do you form the plural of a single letter?",
+            "answer": "Add an apostrophe and s (e.g., p’s, q’s)."
+          },
+          {
+            "type": "short_answer",
+            "question": "Which of the following is the correct plural of the abbreviation 'Ph.D.'?",
+            "answer": "Ph.D.’s"
+          },
+          {
+            "type": "short_answer",
+            "question": "Which abbreviation is pluralized without an apostrophe?",
+            "answer": "TV"
+          },
+          {
+            "type": "short_answer",
+            "question": "Which of the following is a correct plural form of a lowercase letter?",
+            "answer": "a’s"
+          },
+          {
+            "type": "short_answer",
+            "question": "The plural of the abbreviation 'CPA' is ______.",
+            "answer": "CPAs"
+          },
+          {
+            "type": "short_answer",
+            "question": "Which rule applies when pluralizing abbreviations with internal periods?",
+            "answer": "Add apostrophe and s (e.g., I.O.U. → I.O.U.’s)"
+          }
+        ]
+      },
+      {
+        "title": "Main-Purpose Sentences",
+        "questions": [
+          {
+            "type": "short_answer",
+            "question": "What is the main idea of Professor Oak’s statement about plants?",
+            "answer": "He wants plants that are easy to grow, colorful, and low-maintenance."
+          },
+          {
+            "type": "short_answer",
+            "question": "What is the main idea of Larry’s comment about the desk?",
+            "answer": "He disliked the desk because it didn’t support the pencil sharpener properly."
+          }
+        ]
+      },
+      {
+        "title": "Verbs and Their Types",
+        "questions": [
+          {
+            "type": "multiple_choice",
+            "question": "Which of the following is an action verb?",
+            "options": ["Jumped", "Is", "Am", "Be"],
+            "answer": "Jumped"
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Which of the following is a linking verb?",
+            "options": ["Jumped", "Are", "Ran", "Eat"],
+            "answer": "Are"
+          },
+          {
+            "type": "short_answer",
+            "question": "What is the role of a linking verb in a sentence?",
+            "answer": "It joins the subject to a complement describing its state or condition (e.g., 'I am happy')."
+          }
+        ]
+      }
+    ]
+  }
+}
